@@ -8,29 +8,32 @@
 import Foundation
 
 protocol HomeRepositoryType {
-    var fromRemote: HomeRemoteRepositoryType {get}
-   // var fromLocal: HomeLocalRepositoryType {get}
+    func fetchProducts() async -> Result<[Product], AppError>
 }
 
 class HomeRepository: HomeRepositoryType {
-
-}
-
-extension HomeRepositoryType {
-    var fromRemote: HomeRemoteRepositoryType {
-        return HomeRemoteRepository()
+    private let remoteRepository: HomeRemoteRepositoryType
+   // private let localRepository: HomeLocalRepositoryType
+    
+    init(remoteRepository: HomeRemoteRepository) {
+        self.remoteRepository = remoteRepository
+    }
+    
+    func fetchProducts() async -> Result<[Product], AppError> {
+        do {
+            let result = try await remoteRepository.fetchProductsFromRemote()
+            if case .success(let response) = result {
+                guard let products = response.results, !products.isEmpty else {
+                    return .success([])
+                }
+                var productsDTO: [Product] = []
+                let _ = products.compactMap {productsDTO.append(Product(name: $0.name ?? "", price: $0.price ?? "", imageUrls: $0.imageUrls ?? [], thumbnailUrls: $0.thumbnailUrls ?? []))}
+                return .success(productsDTO)
+            }
+        } catch  {
+            return .failure(AppError(error: error.localizedDescription))
+        }
+        return .failure(AppError.generalError())
     }
 
-//    var fromLocal: HomeLocalRepositoryType {
-//        return HomeLocalRepository()
-//    }
-}
-
-class HomeMockRepository {
-
-}
-extension HomeMockRepository: HomeRepositoryType {
-    var fromRemote : HomeRemoteRepositoryType {
-        return HomeMockRemoteRepository()
-    }
 }

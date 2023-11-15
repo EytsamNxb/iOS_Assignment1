@@ -8,19 +8,24 @@
 import Foundation
 import Combine
 
+@MainActor
 class HomeViewModel: ObservableObject {
-    @Published var products: [ProductModel] = []
+    @Published var products: [Product] = []
     @Published var isLoading: Bool = false
     @Published var navigateToProductDetail: Bool = false
     @Published var showErrorAlert: Bool = false
     
     var errorMessage: String = ""
-    private let homeRepository: HomeRepositoryType = HomeRepository()
-    var selectedProduct: ProductModel?
+    private let homeRepository: HomeRepositoryType = HomeRepository(remoteRepository: HomeRemoteRepository())
+    var selectedProduct: Product?
     
-    func selectedRowAndNavigateToDetail(_ product: ProductModel) {
+    func selectedRowAndNavigateToDetail(_ product: Product) {
         self.selectedProduct = product
         self.navigateToProductDetail.toggle()
+    }
+    
+    func dismissErrorAlert() {
+        self.showErrorAlert = false
     }
 }
 
@@ -32,21 +37,15 @@ extension HomeViewModel {
     /// - Returns: Result type enum. ProductResponseModel returns in case of Success and AppError returns in case of Failure.
     ///
     func getAllProducts() async {
-        DispatchQueue.main.async {
-            self.isLoading = true
-        }
-        
-        let productsResult = await homeRepository.fromRemote.fetchProducts()
+        self.isLoading = true
+        let productsResult = await homeRepository.fetchProducts()
         switch productsResult {
-        case .success(let response):
-            guard let products = response.results, !products.isEmpty else {return}
-            await MainActor.run {
-                self.products = products
-                self.isLoading = false
-            }
+        case .success(let products):
+            self.products = products
+            self.isLoading = false
         case .failure(let error):
             self.errorMessage = error.localizedDescription
-            self.showErrorAlert.toggle()
+            self.showErrorAlert = true
         }
     }
 }

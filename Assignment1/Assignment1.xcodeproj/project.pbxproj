@@ -28,6 +28,8 @@
 		C38EB8972B04AAE90034E632 /* ProductDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = C38EB8962B04AAE90034E632 /* ProductDetail.swift */; };
 		C38EB8992B04C2B00034E632 /* MockJSON.json in Resources */ = {isa = PBXBuildFile; fileRef = C38EB8982B04C2B00034E632 /* MockJSON.json */; };
 		C38EB89B2B04C32C0034E632 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C38EB89A2B04C32C0034E632 /* Helper.swift */; };
+		C38EB89D2B04F9150034E632 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C38EB89C2B04F9150034E632 /* Constants.swift */; };
+		C38EB89F2B04FDE60034E632 /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = C38EB89E2B04FDE60034E632 /* Product.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +73,8 @@
 		C38EB8962B04AAE90034E632 /* ProductDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetail.swift; sourceTree = "<group>"; };
 		C38EB8982B04C2B00034E632 /* MockJSON.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = MockJSON.json; sourceTree = "<group>"; };
 		C38EB89A2B04C32C0034E632 /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
+		C38EB89C2B04F9150034E632 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		C38EB89E2B04FDE60034E632 /* Product.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -135,6 +139,7 @@
 				C38EB8912B049C8F0034E632 /* ProductRow.swift */,
 				C38EB8962B04AAE90034E632 /* ProductDetail.swift */,
 				C38EB89A2B04C32C0034E632 /* Helper.swift */,
+				C38EB89C2B04F9150034E632 /* Constants.swift */,
 			);
 			path = Assignment1;
 			sourceTree = "<group>";
@@ -212,6 +217,7 @@
 			isa = PBXGroup;
 			children = (
 				C38EB88C2B03A3A70034E632 /* ResponseModels */,
+				C38EB89E2B04FDE60034E632 /* Product.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -366,9 +372,11 @@
 				C38EB8902B04904E0034E632 /* HomeViewModel.swift in Sources */,
 				C38EB8882B03A2B60034E632 /* HomeRepository.swift in Sources */,
 				C38EB87C2B0395020034E632 /* NetworkManager.swift in Sources */,
+				C38EB89D2B04F9150034E632 /* Constants.swift in Sources */,
 				C38EB87A2B0393ED0034E632 /* URLRequest.swift in Sources */,
 				C38EB8812B0397A50034E632 /* BaseRoute.swift in Sources */,
 				C38EB87E2B0395DE0034E632 /* AppError.swift in Sources */,
+				C38EB89F2B04FDE60034E632 /* Product.swift in Sources */,
 				C38EB8972B04AAE90034E632 /* ProductDetail.swift in Sources */,
 				C38EB8512B0391DE0034E632 /* HomeView.swift in Sources */,
 				C38EB8922B049C8F0034E632 /* ProductRow.swift in Sources */,

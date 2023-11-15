@@ -27,15 +27,17 @@ struct HomeView: View {
                     NavigationLink(destination: ProductDetail(product: product), isActive:  $viewModel.navigateToProductDetail) {
                     }
                 }
-            }.navigationTitle("Products")
+            }.navigationTitle(Constants.PRODUCTS)
                 .padding()
         }.ignoresSafeArea()
             .alert(viewModel.errorMessage, isPresented: $viewModel.showErrorAlert) {
-                Button("Dismiss", role: .cancel) { }
-                    }
-        .task {
-            await viewModel.getAllProducts()
-        }
+                Button(Constants.DISMISS, role: .cancel) {
+                    viewModel.dismissErrorAlert()
+                }
+            }
+            .task {
+                await viewModel.getAllProducts()
+            }
         
     }
 }
