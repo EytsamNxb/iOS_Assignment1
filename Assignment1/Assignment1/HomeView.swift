@@ -17,13 +17,22 @@ struct HomeView: View {
                 } else {
                     ScrollView(showsIndicators: false) {
                         ForEach(viewModel.products, id: \.self) { product in
-                            ProductRow(product: product)
+                            ProductRow(product: product).onTapGesture {
+                                viewModel.selectedRowAndNavigateToDetail(product)
+                            }
                         }
+                    }
+                }
+                if let product = viewModel.selectedProduct {
+                    NavigationLink(destination: ProductDetail(product: product), isActive:  $viewModel.navigateToProductDetail) {
                     }
                 }
             }.navigationTitle("Products")
                 .padding()
         }.ignoresSafeArea()
+            .alert(viewModel.errorMessage, isPresented: $viewModel.showErrorAlert) {
+                Button("Dismiss", role: .cancel) { }
+                    }
         .task {
             await viewModel.getAllProducts()
         }

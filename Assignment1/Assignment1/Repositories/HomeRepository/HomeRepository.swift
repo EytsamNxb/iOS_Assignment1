@@ -25,3 +25,12 @@ extension HomeRepositoryType {
 //        return HomeLocalRepository()
 //    }
 }
+
+class HomeMockRepository {
+
+}
+extension HomeMockRepository: HomeRepositoryType {
+    var fromRemote : HomeRemoteRepositoryType {
+        return HomeMockRemoteRepository()
+    }
+}

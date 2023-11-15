@@ -11,8 +11,26 @@ import Combine
 class HomeViewModel: ObservableObject {
     @Published var products: [ProductModel] = []
     @Published var isLoading: Bool = false
-    private let homeRepository: HomeRepositoryType = HomeRepository()
+    @Published var navigateToProductDetail: Bool = false
+    @Published var showErrorAlert: Bool = false
     
+    var errorMessage: String = ""
+    private let homeRepository: HomeRepositoryType = HomeRepository()
+    var selectedProduct: ProductModel?
+    
+    func selectedRowAndNavigateToDetail(_ product: ProductModel) {
+        self.selectedProduct = product
+        self.navigateToProductDetail.toggle()
+    }
+}
+
+//MARK: -Network Calls
+
+extension HomeViewModel {
+    /// Fetches result of products from network.
+    ///
+    /// - Returns: Result type enum. ProductResponseModel returns in case of Success and AppError returns in case of Failure.
+    ///
     func getAllProducts() async {
         DispatchQueue.main.async {
             self.isLoading = true
@@ -25,10 +43,10 @@ class HomeViewModel: ObservableObject {
             await MainActor.run {
                 self.products = products
                 self.isLoading = false
-                debugPrint(products)
             }
         case .failure(let error):
-            debugPrint(error.localizedDescription)
+            self.errorMessage = error.localizedDescription
+            self.showErrorAlert.toggle()
         }
     }
 }

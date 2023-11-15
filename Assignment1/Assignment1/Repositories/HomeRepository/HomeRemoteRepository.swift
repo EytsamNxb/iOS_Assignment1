@@ -23,3 +23,9 @@ class HomeRemoteRepository: HomeRemoteRepositoryType, NetworkManager, UrlRequest
     }
 }
 
+class HomeMockRemoteRepository: HomeRemoteRepositoryType {
+    func fetchProducts() async -> Result<ProductResponseModel, Error> {
+        let productResponse: ProductResponseModel = Helper.load("MockJSON.json")
+        return .success(productResponse)
+    }
+}
