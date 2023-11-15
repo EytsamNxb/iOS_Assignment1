@@ -9,12 +9,12 @@ import SwiftUI
 import NukeUI
 
 struct ProductRow: View {
-    var product: ProductModel
+    var product: Product
     var body: some View {
         VStack(alignment: .leading) {
             VStack(alignment: .leading) {
                 HStack(spacing: 20) {
-                    if let thumbnails = product.image_urls_thumbnails, let thumbnail = thumbnails.first {
+                    if let thumbnails = product.thumbnailUrls, let thumbnail = thumbnails.first {
                         LazyImage(url: URL(string: thumbnail)) { state in
                             if state.isLoading {
                                 ProgressView().progressViewStyle(.circular)

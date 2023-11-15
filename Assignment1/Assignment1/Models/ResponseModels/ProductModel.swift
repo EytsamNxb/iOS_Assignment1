@@ -10,53 +10,53 @@ import Foundation
 struct ProductResponseModel : Codable {
     let results : [ProductModel]?
     let pagination : Pagination?
-
+    
     enum CodingKeys: String, CodingKey {
-
+        
         case results = "results"
         case pagination = "pagination"
     }
-
+    
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         results = try values.decodeIfPresent([ProductModel].self, forKey: .results)
         pagination = try values.decodeIfPresent(Pagination.self, forKey: .pagination)
     }
-
+    
 }
 
 
 struct ProductModel : Codable, Hashable {
-    let created_at : String?
+    let createdAt : String?
     let price : String?
     let name : String?
     let uid : String?
-    let image_ids : [String]?
-    let image_urls : [String]?
-    let image_urls_thumbnails : [String]?
-
+    let imageIDs : [String]?
+    let imageUrls : [String]?
+    let thumbnailUrls : [String]?
+    
     enum CodingKeys: String, CodingKey {
-
-        case created_at = "created_at"
+        
+        case createdAt = "created_at"
         case price = "price"
         case name = "name"
         case uid = "uid"
-        case image_ids = "image_ids"
-        case image_urls = "image_urls"
-        case image_urls_thumbnails = "image_urls_thumbnails"
+        case imageIDs = "image_ids"
+        case imageUrls = "image_urls"
+        case thumbnailUrls = "image_urls_thumbnails"
     }
-
+    
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
-        created_at = try values.decodeIfPresent(String.self, forKey: .created_at)
+        createdAt = try values.decodeIfPresent(String.self, forKey: .createdAt)
         price = try values.decodeIfPresent(String.self, forKey: .price)
         name = try values.decodeIfPresent(String.self, forKey: .name)
         uid = try values.decodeIfPresent(String.self, forKey: .uid)
-        image_ids = try values.decodeIfPresent([String].self, forKey: .image_ids)
-        image_urls = try values.decodeIfPresent([String].self, forKey: .image_urls)
-        image_urls_thumbnails = try values.decodeIfPresent([String].self, forKey: .image_urls_thumbnails)
+        imageIDs = try values.decodeIfPresent([String].self, forKey: .imageIDs)
+        imageUrls = try values.decodeIfPresent([String].self, forKey: .imageUrls)
+        thumbnailUrls = try values.decodeIfPresent([String].self, forKey: .thumbnailUrls)
     }
-
+    
 }
 
 struct Pagination : Codable {
@@ -64,10 +64,10 @@ struct Pagination : Codable {
     enum CodingKeys: String, CodingKey {
         case key = "key"
     }
-
+    
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         key = try values.decodeIfPresent(String.self, forKey: .key)
     }
-
+    
 }

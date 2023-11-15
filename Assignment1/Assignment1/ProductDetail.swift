@@ -9,11 +9,11 @@ import SwiftUI
 import NukeUI
 
 struct ProductDetail: View {
-   var product: ProductModel
+   var product: Product
     var body: some View {
         ScrollView(showsIndicators: false) {
             VStack(alignment: .leading, spacing: 10) {
-                if let image = product.image_urls, let displayImage = image.first {
+                if let image = product.imageUrls, let displayImage = image.first {
                     LazyImage(url: URL(string: displayImage)) { state in
                         if state.isLoading {
                             VStack {
