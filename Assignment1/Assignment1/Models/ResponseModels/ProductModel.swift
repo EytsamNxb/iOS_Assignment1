@@ -26,7 +26,7 @@ struct ProductResponseModel : Codable {
 }
 
 
-struct ProductModel : Codable {
+struct ProductModel : Codable, Hashable {
     let created_at : String?
     let price : String?
     let name : String?

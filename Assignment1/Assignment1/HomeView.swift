@@ -10,16 +10,24 @@ import SwiftUI
 struct HomeView: View {
     @StateObject var viewModel: HomeViewModel
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
-        }
+        NavigationView {
+            VStack {
+                if viewModel.isLoading {
+                    ProgressView().padding()
+                } else {
+                    ScrollView(showsIndicators: false) {
+                        ForEach(viewModel.products, id: \.self) { product in
+                            ProductRow(product: product)
+                        }
+                    }
+                }
+            }.navigationTitle("Products")
+                .padding()
+        }.ignoresSafeArea()
         .task {
             await viewModel.getAllProducts()
         }
-        .padding()
+        
     }
 }
 
