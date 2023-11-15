@@ -19,7 +19,7 @@ struct ProductResponseModel : Codable {
 
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
-        results = try values.decodeIfPresent([Results].self, forKey: .results)
+        results = try values.decodeIfPresent([ProductModel].self, forKey: .results)
         pagination = try values.decodeIfPresent(Pagination.self, forKey: .pagination)
     }
 

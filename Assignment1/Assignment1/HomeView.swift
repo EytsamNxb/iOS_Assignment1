@@ -7,7 +7,8 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct HomeView: View {
+    @StateObject var viewModel: HomeViewModel
     var body: some View {
         VStack {
             Image(systemName: "globe")
@@ -15,10 +16,13 @@ struct ContentView: View {
                 .foregroundStyle(.tint)
             Text("Hello, world!")
         }
+        .task {
+            await viewModel.getAllProducts()
+        }
         .padding()
     }
 }
 
 #Preview {
-    ContentView()
+    HomeView(viewModel: HomeViewModel())
 }

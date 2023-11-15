@@ -16,12 +16,12 @@ class HomeRepository: HomeRepositoryType {
 
 }
 
-extension ChatRepositoryType {
+extension HomeRepositoryType {
     var fromRemote: HomeRemoteRepositoryType {
         return HomeRemoteRepository()
     }
 
-//    var fromLocal: ChatLocalRepositoryType {
-//        return ChatLocalRepository()
+//    var fromLocal: HomeLocalRepositoryType {
+//        return HomeLocalRepository()
 //    }
 }
