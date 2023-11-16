@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import NukeUI
 
 struct ProductRow: View {
     var product: Product
@@ -15,16 +14,14 @@ struct ProductRow: View {
             VStack(alignment: .leading) {
                 HStack(spacing: 20) {
                     if let thumbnails = product.thumbnailUrls, let thumbnail = thumbnails.first {
-                        LazyImage(url: URL(string: thumbnail)) { state in
-                            if state.isLoading {
-                                ProgressView().progressViewStyle(.circular)
-                            } else if let image = state.image {
-                                image
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .clipShape(Circle()) // Clip the image into a circular shape
-                                    .frame(width: 50, height: 50)
-                            }
+                        AsyncImage(url: URL(string: thumbnail)) { image in
+                            image
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .clipShape(Circle()) // Clip the image into a circular shape
+                                .frame(width: 50, height: 50)
+                        } placeholder: {
+                            ProgressView().progressViewStyle(.circular).padding()
                         }.frame(width: 50,height: 50)
                     }
                     VStack(alignment: .leading, spacing: 5) {

@@ -6,41 +6,33 @@
 //
 
 import SwiftUI
-import NukeUI
 
 struct ProductDetail: View {
    var product: Product
     var body: some View {
         ScrollView(showsIndicators: false) {
-            VStack(alignment: .leading, spacing: 10) {
+            VStack(spacing: 10) {
                 if let image = product.imageUrls, let displayImage = image.first {
-                    LazyImage(url: URL(string: displayImage)) { state in
-                        if state.isLoading {
-                            VStack {
-                                HStack {
-                                    Spacer()
-                                    ProgressView().progressViewStyle(.circular).padding()
-                                    Spacer()
-                                }
-                            }
-                        } else if let image = state.image {
-                            image
-                                .resizable()
-                                .frame(height: 200)
-                                .clipShape(RoundedRectangle(cornerRadius: 5.0))
-                        }
+                    AsyncImage(url: URL(string: displayImage)) { image in
+                        image
+                            .resizable()
+                            .scaledToFit()
+                            .frame(height: 200)
+                            .clipShape(RoundedRectangle(cornerRadius: 5.0))
+                    } placeholder: {
+                        ProgressView().progressViewStyle(.circular).padding()
                     }.frame(height: 200)
                 }
                 HStack {
-                    VStack(alignment: .leading, spacing: 10) {
+                    VStack(alignment: .leading, spacing: 5) {
                         Text(product.name ?? "No name")
-                            .font(.system(size: 16).weight(.bold))
+                            .font(.system(size: 18).weight(.bold))
                             .fixedSize(horizontal: false, vertical: true)
                         Text(product.price ?? "No price")
                             .font(.system(size: 14).weight(.regular))
                             .fixedSize(horizontal: false, vertical: true)
+                            .multilineTextAlignment(.leading)
                     }
-                    Spacer()
                 }
                 Spacer()
                 
