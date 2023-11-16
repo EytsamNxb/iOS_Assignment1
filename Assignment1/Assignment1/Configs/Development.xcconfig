@@ -1,0 +1,16 @@
+//
+//  Development.xcconfig
+//  Assignment1
+//
+//  Created by Eytsam Elahi on 16/11/2023.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+// Server URL
+BASE_URL = ey3f2y0nre.execute-api.us-east-1.amazonaws.com
+
+// App Settings
+APP_NAME = Assignment(dev)
+APP_BUNDLE_ID = com.Nextbridge.Assignment1.dev
