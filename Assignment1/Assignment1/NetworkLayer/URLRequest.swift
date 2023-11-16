@@ -37,7 +37,7 @@ extension UrlRequest {
     func CreateURLRequest<T: Codable>(route: BaseRoute, requestType: RequestType, _ input: RouterInput<T>) throws -> URLRequest {
         var components = URLComponents()
         components.scheme = "https"
-        components.host =  "ey3f2y0nre.execute-api.us-east-1.amazonaws.com"//BuildConfiguration.shared.baseURL
+        components.host =  AppEnvironment.baseURL
         components.path = route.path
         if let query = input.query {
             var queryItems = [URLQueryItem]()

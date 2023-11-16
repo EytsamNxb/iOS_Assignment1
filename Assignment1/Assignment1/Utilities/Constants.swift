@@ -11,4 +11,5 @@ import Foundation
 class Constants {
     static let DISMISS = "Dismiss"
     static let PRODUCTS = "Products"
+    static let BASE_URL = "BASE_URL"
 }
