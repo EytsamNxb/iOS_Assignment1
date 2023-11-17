@@ -8,32 +8,25 @@
 import Foundation
 
 protocol HomeRepositoryType {
-    func fetchProducts() async -> Result<[Product], AppError>
+    func fetchProducts() async throws -> [Product]
 }
 
 class HomeRepository: HomeRepositoryType {
     private let remoteRepository: HomeRemoteRepositoryType
-   // private let localRepository: HomeLocalRepositoryType
+    // private let localRepository: HomeLocalRepositoryType
     
     init(remoteRepository: HomeRemoteRepository) {
         self.remoteRepository = remoteRepository
     }
     
-    func fetchProducts() async -> Result<[Product], AppError> {
-        do {
-            let result = try await remoteRepository.fetchProductsFromRemote()
-            if case .success(let response) = result {
-                guard let products = response.results, !products.isEmpty else {
-                    return .success([])
-                }
-                var productsDTO: [Product] = []
-                let _ = products.compactMap {productsDTO.append(Product(name: $0.name ?? "", price: $0.price ?? "", imageUrls: $0.imageUrls ?? [], thumbnailUrls: $0.thumbnailUrls ?? []))}
-                return .success(productsDTO)
-            }
-        } catch  {
-            return .failure(AppError(error: error.localizedDescription))
+    func fetchProducts() async throws -> [Product] {
+        let response = try await remoteRepository.fetchProductsFromRemote()
+        guard let products = response.results, !products.isEmpty else {
+            return []
         }
-        return .failure(AppError.generalError())
+        var productsDTO: [Product] = []
+        let _ = products.compactMap {productsDTO.append(Product(name: $0.name ?? "", price: $0.price ?? "", imageUrls: $0.imageUrls ?? [], thumbnailUrls: $0.thumbnailUrls ?? []))}
+        return productsDTO
     }
-
+    
 }
