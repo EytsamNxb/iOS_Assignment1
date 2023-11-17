@@ -38,12 +38,11 @@ extension HomeViewModel {
     ///
     func getAllProducts() async {
         self.isLoading = true
-        let productsResult = await homeRepository.fetchProducts()
-        switch productsResult {
-        case .success(let products):
+        do {
+            let products = try await homeRepository.fetchProducts()
             self.products = products
             self.isLoading = false
-        case .failure(let error):
+        } catch {
             self.errorMessage = error.localizedDescription
             self.showErrorAlert = true
         }
