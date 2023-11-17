@@ -8,17 +8,17 @@
 import Foundation
 
 protocol NetworkManager {
-    func request<T: Codable>(route: URLRequest) async throws -> Result<T, Error>
+    func request<T: Codable>(route: URLRequest) async throws ->  T
 }
 
 extension NetworkManager {
-    func request<T: Codable>(route: URLRequest) async throws -> Result<T, Error> {
+    func request<T: Codable>(route: URLRequest) async throws -> T {
         if let url = route.url?.absoluteString {
             debugPrint(url + " -> " + (String(data: route.httpBody ?? Data(), encoding: .utf8) ?? "Failed to Convert"))
         }
         
         guard let _ = route.url else {
-            return .failure(AppError.generalError())
+            throw AppError.generalError()
         }
         
         let session = URLSession.shared
@@ -29,21 +29,21 @@ extension NetworkManager {
             case 200...299:
                 do {
                     let output = try JSONDecoder().decode(T.self, from: data)
-                    return .success(output)
+                    return output
                 } catch {
-                    return .failure(AppError(error: error.localizedDescription))
+                   throw AppError(error: error.localizedDescription)
                 }
             case 401:
-                return .failure(AppError.unauthorized())
+                throw AppError.unauthorized()
             case 404:
-                return .failure(AppError.fileNotFound())
+                throw AppError.fileNotFound()
             case 500...599:
-                return .failure(AppError.serverError())
+                throw AppError.serverError()
             default:
-                return .failure(AppError.generalError())
+                throw AppError.generalError()
             }
         }
-        return .failure(AppError.generalError())
+        throw AppError.generalError()
     }
 }
 
